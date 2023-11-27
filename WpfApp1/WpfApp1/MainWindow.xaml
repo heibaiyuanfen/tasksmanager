@@ -46,5 +46,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button Content="进入目标文件" HorizontalAlignment="Left" Margin="342,267,0,0" VerticalAlignment="Top" Click="Button_Click_4"/>
     </Grid>
 </Window>
