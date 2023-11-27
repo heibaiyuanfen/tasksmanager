@@ -213,5 +213,45 @@ namespace WpfApp1
                 }
             }
         }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            // 获取输入的任务号
+            string taskNumber = taskNumberTextBox.Text;
+
+            if (!string.IsNullOrEmpty(taskNumber))
+            {
+                try
+                {
+                    // 获取与任务号匹配的进程
+                    Process[] processes = Process.GetProcessesByName(taskNumber);
+
+                    // 检查是否找到匹配的进程
+                    if (processes.Length > 0)
+                    {
+                        // 获取CPU使用情况和内存使用情况
+                        float cpuUsage = processes[0].TotalProcessorTime.Seconds; // CPU使用时间（秒）
+                        long memoryUsage = processes[0].WorkingSet64 / (1024 * 1024); // 内存使用量（MB）
+
+                        // 显示CPU和内存使用情况
+                        MessageBox.Show($"任务号: {taskNumber}\nCPU使用情况: {cpuUsage} 秒\n内存使用情况: {memoryUsage} MB");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"未找到匹配任务号: {taskNumber}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 处理异常，例如无法访问任务的权限问题
+                    MessageBox.Show($"Error: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("请输入任务号");
+            }
+
+        }
     }
  }

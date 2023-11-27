@@ -294,3 +294,95 @@ namespace YourNamespace
 ```
 ## 还要帮儿子解锁，真恶心
 
+
+
+## 实现查找cpu和内存使用情况
+
+``` c#code
+
+<Grid>
+    <!-- 按钮用于查找CPU和内存使用情况 -->
+    <Button Content="查找CPU和内存使用情况" Click="ShowPerformance_Click" Width="250" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,10,0,0"/>
+    
+    <!-- TextBox用于输入任务号 -->
+    <TextBox Name="taskNumberTextBox" PlaceholderText="输入任务号" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,10,0,0"/>
+
+    <!-- ListBox用于显示文件夹和文件列表 -->
+    <ListBox Name="folderListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Height="200" Margin="20,50,0,0">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding}" />
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+    
+    <!-- ListBox用于显示任务号和进程号 -->
+    <ListBox Name="taskListBox" HorizontalAlignment="Right" VerticalAlignment="Top" Width="200" Height="200" Margin="0,50,20,0">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding TaskNumber}" />
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</Grid>
+
+
+using System;
+using System.Diagnostics;
+using System.Windows;
+
+namespace YourNamespace
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void ShowPerformance_Click(object sender, RoutedEventArgs e)
+        {
+            // 获取输入的任务号
+            string taskNumber = taskNumberTextBox.Text;
+
+            if (!string.IsNullOrEmpty(taskNumber))
+            {
+                try
+                {
+                    // 获取与任务号匹配的进程
+                    Process[] processes = Process.GetProcessesByName(taskNumber);
+
+                    // 检查是否找到匹配的进程
+                    if (processes.Length > 0)
+                    {
+                        // 获取CPU使用情况和内存使用情况
+                        float cpuUsage = processes[0].TotalProcessorTime.Seconds; // CPU使用时间（秒）
+                        long memoryUsage = processes[0].WorkingSet64 / (1024 * 1024); // 内存使用量（MB）
+
+                        // 显示CPU和内存使用情况
+                        MessageBox.Show($"任务号: {taskNumber}\nCPU使用情况: {cpuUsage} 秒\n内存使用情况: {memoryUsage} MB");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"未找到匹配任务号: {taskNumber}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 处理异常，例如无法访问任务的权限问题
+                    MessageBox.Show($"Error: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("请输入任务号");
+            }
+        }
+    }
+}
+
+
+```
+
+
+
