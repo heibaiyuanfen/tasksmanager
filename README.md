@@ -180,3 +180,78 @@ namespace YourNamespace
 
 ```
 
+## WPF应用程序示例 - 显示文件和文件夹
+
+### XAML布局
+
+在XAML中，创建一个界面布局，包括一个按钮和一个ListBox用于显示文件和文件夹列表。
+
+```xml
+<Window x:Class="YourNamespace.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="显示文件和文件夹" Height="400" Width="600">
+    <Grid>
+        <!-- 按钮用于显示文件和文件夹 -->
+        <Button Content="显示文件和文件夹" Click="ShowFilesAndDirectories_Click" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,10,0,0"/>
+        
+        <!-- ListBox用于显示文件和文件夹列表 -->
+        <ListBox Name="taskListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Height="300" Margin="20,50,0,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
+
+```
+## c#代码
+### 在C#代码中，实现按钮的点击事件处理程序，用于同时获取并显示D盘下的文件和文件夹列表。
+``` c#code
+using System;
+using System.IO;
+using System.Windows;
+
+namespace YourNamespace
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void ShowFilesAndDirectories_Click(object sender, RoutedEventArgs e)
+        {
+            // 指定D盘的路径
+            string dDrivePath = @"D:\";
+
+            try
+            {
+                // 获取D盘下的所有文件和文件夹
+                string[] items = Directory.GetFileSystemEntries(dDrivePath);
+
+                // 清空ListBox以便显示新的文件和文件夹列表
+                taskListBox.Items.Clear();
+
+                // 将文件和文件夹名添加到ListBox中
+                foreach (string item in items)
+                {
+                    taskListBox.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                // 处理异常，例如无法访问D盘或其他问题
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+    }
+}
+
+
+
+```
+
