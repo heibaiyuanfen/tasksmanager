@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.IO;
 
 
 namespace WpfApp1
@@ -152,5 +153,34 @@ namespace WpfApp1
                 }
             }
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            // 指定D盘的路径
+            string dDrivePath = @"D:\";
+
+            try
+            {
+                //// 获取D盘下的所有文件
+                //string[] files = Directory.GetFiles(dDrivePath);
+
+                // 获取D盘下的所有文件和文件夹
+                string[] items = Directory.GetFileSystemEntries(dDrivePath);
+
+                // 清空ListBox以便显示新的文件列表
+                showfile.Items.Clear();
+
+                // 将文件和文件夹名添加到ListBox中
+                foreach (string item in items)
+                {
+                    showfile.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                // 处理异常，例如无法访问D盘或其他问题
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
     }
-}
+ }

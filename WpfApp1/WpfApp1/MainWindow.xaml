@@ -7,11 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.Background>
+            <ImageBrush ImageSource="D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\image\1701065843613.jpg"/>
+        </Grid.Background>
         <Button Content="显示任务号和进程号" HorizontalAlignment="Left" Margin="20,26,0,0" VerticalAlignment="Top" Click="Button_Click"/>
         <!--<ListBox Name="taskListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="200" Margin="20,50,0,0"/>-->
         <ListBox Name="taskListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="200" Margin="20,50,0,0">
+            <!-- 设置ListBox的背景图片 -->
+            <ListBox.Background>
+                <ImageBrush ImageSource="D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\image\1701065843613.jpg"/>
+            </ListBox.Background>
             <ListBox.ItemTemplate>
+
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="任务号: " />
@@ -24,6 +31,20 @@
         </ListBox>
         <Button Content="结束任务进程" HorizontalAlignment="Left" Margin="20,265,0,0" VerticalAlignment="Top" Height="24" Width="86" Click="Button_Click_2"/>
         <TextBox HorizontalAlignment="Left" Margin="147,27,0,0" TextWrapping="Wrap" Text="输入任务号" Name="searchTextBox"   VerticalAlignment="Top" Width="120" TextChanged="SearchTextBox_TextChanged"/>
+        <Button Content="显示文件" HorizontalAlignment="Left" Margin="348,25,0,0" VerticalAlignment="Top" Click="Button_Click_3"/>
+        <ListBox Margin="347,51,0,0" Name="showfile" HorizontalAlignment="Left" VerticalAlignment="Top" Height="199" Width="363">
+            <!-- 设置ListBox的背景图片 -->
+            <ListBox.Background>
+                <ImageBrush ImageSource="D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\image\1701065843613.jpg"/>
+            </ListBox.Background>
+            <ListBox.ItemTemplate>
 
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
