@@ -22,5 +22,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button Content="结束任务进程" HorizontalAlignment="Left" Margin="20,265,0,0" VerticalAlignment="Top" Height="24" Width="86" Click="Button_Click_2"/>
+        <TextBox HorizontalAlignment="Left" Margin="147,27,0,0" TextWrapping="Wrap" Text="输入任务号" Name="searchTextBox"   VerticalAlignment="Top" Width="120" TextChanged="SearchTextBox_TextChanged"/>
+
     </Grid>
 </Window>
