@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="资源管理器" Height="450" Width="800"
+        Icon="D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\image\1701065843613.jpg">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\image\1701065843613.jpg"/>
@@ -22,7 +23,7 @@
             <ListBox.ItemTemplate>
 
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" >
 
                         <Image Width="32" Height="32" Margin="0,0,5,0" Source="{Binding Icon}"/>
                         <TextBlock Text="{Binding TaskID}" VerticalAlignment="Center"/>

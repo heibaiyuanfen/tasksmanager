@@ -1,22 +1,13 @@
-﻿using System.Text;
+﻿
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.IO;
 using System.Windows.Interop;
 using System.Drawing;
 using WpfApp1.Method;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
 
@@ -27,25 +18,17 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ObservableCollection<ProcessInfo> ProcessInfoCollection { get; set; }
+        
 
         public MainWindow()
         {
             InitializeComponent();
 
-            ProcessInfoCollection = new ObservableCollection<ProcessInfo>();
+            
             // 将TextChanged事件关联到搜索方法
             searchTextBox.TextChanged += SearchTextBox_TextChanged;
         }
         
-
-        private string GetTaskNumberFromProcessName(string processName)
-        {
-            // 这是一个示例方法，你可以根据实际情况提取任务号
-            // 这里我们简单地返回进程名称作为任务号
-            return processName;
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -67,7 +50,7 @@ namespace WpfApp1
                     int processId = process.Id;
 
 
-                    string taskNumber = GetTaskNumberFromProcessName(processName);
+                    string taskNumber = Class1.GetTaskNumberFromProcessName(processName);
 
 
                     Icon processIcon = showicon.GetProcessIcon(process);
@@ -124,12 +107,12 @@ namespace WpfApp1
             // 检查是否选择了一个任务
             if (taskListBox.SelectedItem != null)
             {
-                taskinfo selectedTask = (taskinfo)taskListBox.SelectedItem;
+                ProcessInfo selectedTask = (ProcessInfo)taskListBox.SelectedItem;
 
                 try
                 {
                     // 根据任务号结束任务和进程s
-                    Process[] processes = Process.GetProcessesByName(selectedTask.TaskNumber);
+                    Process[] processes = Process.GetProcessesByName(selectedTask.TaskID);
 
                     foreach (Process process in processes)
                     {
@@ -163,7 +146,7 @@ namespace WpfApp1
                 try
                 {
                     string processName = process.ProcessName;
-                    string taskNumber = GetTaskNumberFromProcessName(processName);
+                    string taskNumber = Class1.GetTaskNumberFromProcessName(processName);
                     int processId = process.Id;
 
                     
