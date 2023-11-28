@@ -19,3 +19,5 @@ D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\obj\Debug\net8.0
 D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\obj\Debug\net8.0-windows\WpfApp1.pdb
 D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\obj\Debug\net8.0-windows\WpfApp1.genruntimeconfig.cache
 D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\obj\Debug\net8.0-windows\ref\WpfApp1.dll
+D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\obj\Debug\net8.0-windows\WpfApp1.csproj.ResolveComReference.cache
+D:\Users\wufeifan\Documents\GitHub\tasksmanager\WpfApp1\WpfApp1\obj\Debug\net8.0-windows\WpfApp1.csproj.AssemblyReference.cache

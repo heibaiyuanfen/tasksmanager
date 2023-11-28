@@ -13,6 +13,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.IO;
+using System.Windows.Interop;
+using System.Drawing;
+using WpfApp1.Method;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 
 namespace WpfApp1
@@ -22,10 +27,13 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        public ObservableCollection<ProcessInfo> ProcessInfoCollection { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+
+            ProcessInfoCollection = new ObservableCollection<ProcessInfo>();
             // 将TextChanged事件关联到搜索方法
             searchTextBox.TextChanged += SearchTextBox_TextChanged;
         }
@@ -54,23 +62,50 @@ namespace WpfApp1
             {
                 try
                 {
+                    showicon showicon = new showicon();
                     string processName = process.ProcessName;
                     int processId = process.Id;
 
+
                     string taskNumber = GetTaskNumberFromProcessName(processName);
 
-                    if (!string.IsNullOrEmpty(taskNumber))
-                    {
-                        // 创建一个TaskInfo对象来存储任务号和进程号
-                        taskinfo taskInfo = new taskinfo
-                        {
-                            TaskNumber = taskNumber,
-                            ProcessId = processId
-                        };
 
-                        taskListBox.Items.Add(taskInfo);
+                    Icon processIcon = showicon.GetProcessIcon(process);
+
+                    if (processIcon != null)
+                    {
+                        // 将图标转换为ImageSource以在ListBox中显示
+                        ImageSource imageSource = Imaging.CreateBitmapSourceFromHIcon(
+                            processIcon.Handle,
+                            Int32Rect.Empty,
+                            BitmapSizeOptions.FromEmptyOptions());
+
+                        // 添加进程信息到集合中
+
+
+                        taskListBox.Items.Add(new ProcessInfo { TaskID = taskNumber, ProcessID = processId, Icon = imageSource });
+
+                        // 释放图标资源
+                        processIcon.Dispose();
                     }
+
+
+                    
+
+                    //if (!string.IsNullOrEmpty(taskNumber))
+                    //{
+                    //    // 创建一个TaskInfo对象来存储任务号和进程号
+                    //    taskinfo taskInfo = new taskinfo
+                    //    {
+                    //        TaskNumber = taskNumber,
+                    //        ProcessId = processId,
+
+                    //    };
+
+                    //    taskListBox.Items.Add(taskInfo);
+                    //}
                 }
+
                 catch (Exception ex)
                 {
                     // 处理异常，例如无法访问某些进程的权限问题
@@ -128,21 +163,43 @@ namespace WpfApp1
                 try
                 {
                     string processName = process.ProcessName;
+                    string taskNumber = GetTaskNumberFromProcessName(processName);
                     int processId = process.Id;
 
-                    string taskNumber = GetTaskNumberFromProcessName(processName);
+                    
 
                     // 检查搜索关键字是否出现在任务号或进程号中
                     if (!string.IsNullOrEmpty(taskNumber) && (taskNumber.ToLower().Contains(searchText) || processId.ToString().Contains(searchText)))
                     {
-                        // 创建一个TaskInfo对象来存储任务号和进程号
-                        taskinfo taskInfo = new taskinfo
-                        {
-                            TaskNumber = taskNumber,
-                            ProcessId = processId
-                        };
+                        showicon showicon = new showicon();
+                        Icon processIcon = showicon.GetProcessIcon(process);
 
-                        taskListBox.Items.Add(taskInfo);
+                        if (processIcon != null)
+                        {
+                            // 将图标转换为ImageSource以在ListBox中显示
+                            ImageSource imageSource = Imaging.CreateBitmapSourceFromHIcon(
+                                processIcon.Handle,
+                                Int32Rect.Empty,
+                                BitmapSizeOptions.FromEmptyOptions());
+
+                            // 添加进程信息到集合中
+
+
+                            taskListBox.Items.Add(new ProcessInfo { TaskID = taskNumber, ProcessID = processId, Icon = imageSource });
+
+                            // 释放图标资源
+                            processIcon.Dispose();
+                        }
+                        //// 创建一个TaskInfo对象来存储任务号和进程号
+                        //taskinfo taskInfo = new taskinfo
+                        //{
+                        //    TaskNumber = taskNumber,
+                        //    ProcessId = processId
+                        //};
+
+                        //taskListBox.Items.Add(taskInfo);
+
+
                     }
                 }
                 catch (Exception ex)
