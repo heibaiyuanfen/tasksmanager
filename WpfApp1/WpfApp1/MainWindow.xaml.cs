@@ -9,6 +9,7 @@ using System.Windows.Interop;
 using System.Drawing;
 using WpfApp1.Method;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 
 namespace WpfApp1
@@ -292,6 +293,34 @@ namespace WpfApp1
                 MessageBox.Show("请输入任务号");
             }
 
+        }
+
+        private void IntoTheSelectedDir(object sender, MouseButtonEventArgs e)
+        {
+            // 获取所选文件夹
+            string selectedFolder = (string)showfile.SelectedItem;
+            if (!string.IsNullOrEmpty(selectedFolder) && Directory.Exists(selectedFolder))
+            {
+                try
+                {
+                    // 获取所选文件夹下的所有文件夹和文件
+                    string[] items = Directory.GetFileSystemEntries(selectedFolder);
+
+                    // 清空ListBox以便显示新的文件和文件夹列表
+                    showfile.Items.Clear();
+
+                    // 将文件和文件夹名添加到ListBox中
+                    foreach (string item in items)
+                    {
+                        showfile.Items.Add(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 处理异常，例如无法访问文件夹或其他问题
+                    MessageBox.Show($"Error: {ex.Message}");
+                }
+            }
         }
     }
  }
